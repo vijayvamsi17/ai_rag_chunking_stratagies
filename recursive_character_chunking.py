@@ -1,33 +1,5 @@
-import os
-from langchain_community.document_loaders import FileSystemBlobLoader
-from langchain_community.document_loaders.parsers import PyPDFParser
-from langchain_community.document_loaders.generic import GenericLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-
-
-def load_documents():
-    # Load documents from a directory
-    if not os.path.exists("./docs/"):
-        print(
-            "Directory './docs/' does not exist. Please create it and add your documents.")
-        return []
-
-    loader = GenericLoader(
-        blob_loader=FileSystemBlobLoader(path="./docs/"),
-        blob_parser=PyPDFParser()
-    )
-    documents = loader.load()
-
-    # Print details of the first 2 documents
-    for i, doc in enumerate(documents[:2]):
-        print(f"Documents: {i + 1}:")
-        print(f"Source: {doc.metadata.get('source')}")
-        print(f"Content length: {len(doc.page_content)} characters")
-        print(f"Content: {doc.page_content}") # Print the first 100 characters of the content
-        print(f"Metadata: {doc.metadata}")
-
-    return documents
-
+from load_documents import load_documents
 
 def chunk_documents(documents, chunk_size=800, chunk_overlap=0):
     print("Chunking documents...")
@@ -53,7 +25,7 @@ def chunk_documents(documents, chunk_size=800, chunk_overlap=0):
 
 
 def main():
-    print("Character Chunking Main Function")
+    print("Recursive Character Chunking Main Function")
     # Load documents from a directory
     documents = load_documents()
     # Here you can add your character chunking logic using the loaded documents
