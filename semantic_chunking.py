@@ -2,6 +2,7 @@ from langchain_experimental.text_splitter import SemanticChunker
 from langchain_ollama import OllamaEmbeddings
 from get_embedding_function import get_embedding_function
 from load_documents import load_documents
+from populate_database import create_vector_store
 
 def chunk_documents(documents):
     print("Chunking documents...")
@@ -32,6 +33,8 @@ def main():
     documents = load_documents()
     # Here you can add your character chunking logic using the loaded documents
     chucks = chunk_documents(documents)
+    # Create a vector store from the chunks
+    vector_store = create_vector_store(chucks, persist_directory="db/semantic_character_db")
 
 
 if __name__ == "__main__":

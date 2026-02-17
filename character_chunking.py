@@ -1,5 +1,6 @@
 from langchain_text_splitters import CharacterTextSplitter
 from load_documents import load_documents
+from populate_database import create_vector_store
 
 def chunk_documents(documents, chunk_size=800, chunk_overlap=0):
     print("Chunking documents...")
@@ -29,6 +30,8 @@ def main():
     documents = load_documents()
     # Here you can add your character chunking logic using the loaded documents
     chucks = chunk_documents(documents)
+    # Create a vector store from the chunks
+    vector_store = create_vector_store(chucks, persist_directory="db/chroma_character_db")
 
 
 if __name__ == "__main__":
